@@ -1,0 +1,3 @@
+require("kameleon")
+print("hello")
+
