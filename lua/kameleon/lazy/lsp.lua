@@ -1,5 +1,5 @@
 return
-    {   
+    {  
         "neovim/nvim-lspconfig",
         dependencies = {
             "williamboman/mason.nvim",
@@ -24,13 +24,12 @@ return
                 cmp_lsp.default_capabilities())
 
             require("fidget").setup({})
-            require("mason").setup()
+            require("mason").setup({})
             require("mason-lspconfig").setup({
                 ensure_installed = {
-                    "lua_ls",
+                    -- "lua_ls",
                     "rust_analyzer",
                     "tsserver",
-                    "csharp_ls",
                     "omnisharp",
                     "pylsp"
                 },
@@ -39,8 +38,16 @@ return
                         require("lspconfig")[server_name].setup{
                             capabilities = capabilities
                         }
+                    end,
+                    ["omnisharp"] = function()
+                        require("lspconfig").omnisharp.setup{
+                                enable_roslyn_analysers = true,
+                                enable_import_completion = true,
+                                organize_imports_on_format = true,
+                                filetypes = { 'cs', 'vb', 'csproj', 'sln', 'slnx', 'props' },
+                        }
                     end
                 }
             })
-        end 
+        end
     }
