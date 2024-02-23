@@ -41,13 +41,35 @@ return
                     end,
                     ["omnisharp"] = function()
                         require("lspconfig").omnisharp.setup{
-                                enable_roslyn_analysers = true,
-                                enable_import_completion = true,
-                                organize_imports_on_format = true,
-                                filetypes = { 'cs', 'vb', 'csproj', 'sln', 'slnx', 'props' },
+                            enable_roslyn_analysers = true,
+                            enable_import_completion = true,
+                            organize_imports_on_format = true,
+                            filetypes = { 'cs', 'vb', 'csproj', 'sln', 'slnx', 'props' },
                         }
                     end
                 }
+            })
+
+            local cmp_select = { behavior = cmp.SelectBehavior.Select }
+
+            cmp.setup({
+                snippet = {
+                    expand = function(args)
+                        require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
+                    end,
+                },
+                mapping = cmp.mapping.preset.insert({
+                    ['<C-p>'] = cmp.mapping.select_prev_item(cmp_select),
+                    ['<C-n>'] = cmp.mapping.select_next_item(cmp_select),
+                    ['<C-y>'] = cmp.mapping.confirm({ select = true }),
+                    ["<C-Space>"] = cmp.mapping.complete(),
+                }),
+                sources = cmp.config.sources({
+                    { name = 'nvim_lsp' },
+                    { name = 'luasnip' }, -- For luasnip users.
+                }, {
+                        { name = 'buffer' },
+                    })
             })
         end
     }
