@@ -3,4 +3,4 @@ require("kameleon.remap")
 
 require("kameleon.lazy_init")
 
-print("hello from kameleon")
+--print("hello from kameleon")
