@@ -31,7 +31,7 @@ return
                     "rust_analyzer",
                     "tsserver",
                     "omnisharp",
-                    "pylsp"
+                    "pyright"
                 },
                 handlers = {
                     function(server_name)
