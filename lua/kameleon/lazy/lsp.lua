@@ -31,7 +31,8 @@ return
                     "rust_analyzer",
                     "tsserver",
                     "omnisharp",
-                    "pyright"
+                    "pyright",
+                    "hydra_lsp"
                 },
                 handlers = {
                     function(server_name)
@@ -41,11 +42,18 @@ return
                     end,
                     ["omnisharp"] = function()
                         require("lspconfig").omnisharp.setup{
+                            capabilities = capabilities,
                             enable_roslyn_analysers = true,
                             enable_import_completion = true,
                             organize_imports_on_format = true,
+                            complete_using_omnisharp_snippets = true,
                             filetypes = { 'cs', 'vb', 'csproj', 'sln', 'slnx', 'props' },
                         }
+                    end,
+                    ["hydra_lsp"] = function()
+                        require("lspconfig").hydralsp.setup({
+                           -- on_attach = lsp.on_attach
+                        })
                     end
                 }
             })
@@ -71,5 +79,22 @@ return
                         { name = 'buffer' },
                     })
             })
+
+            local on_attach = function(client, bufnr)
+                local nmap = function(keys, func, desc)
+                    desc = "LSP: " .. desc
+                    vim.keymap.set("n", keys, func, { buffer = bufnr, desc = desc, noremap = true })
+                end
+
+                nmap("gd", vim.lsp.buf.definition, "[G]oto [D]efinition")
+                nmap("gD", vim.lsp.buf.declaration, "[G]oto [D]eclaration")
+                nmap("gr", require("telescope.builtin").lsp_references, "[G]oto [R]eferences")
+                nmap("gI", vim.lsp.buf.implementation, "[G]oto [I]mplementation")
+                nmap("K", vim.lsp.buf.hover, "Hover Documentation")
+                nmap("<C-k>", vim.lsp.buf.signature_help, "Signature Documentation")
+
+                nmap("<leader>rn", vim.lsp.buf.rename, "[R]e[n]ame")
+                nmap("<leader>ca", vim.lsp.buf.code_action, "[C]ode [A]ction")
+            end
         end
     }
