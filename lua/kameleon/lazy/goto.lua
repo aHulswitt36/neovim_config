@@ -1,7 +1,11 @@
 return {
     'rmagatti/goto-preview',
     config = function()
-        require('goto-preview').setup {}
+        require('goto-preview').setup {
+            width = 150;
+            height = 50;
+        }
+
         vim.keymap.set('n', '<leader>gd','<cmd>lua require("goto-preview").goto_preview_definition()<CR>', {noremap=true})
         vim.keymap.set('n', '<leader>gt','<cmd>lua require("goto-preview").goto_preview_type_definition()<CR>',{noremap=true})
         vim.keymap.set('n', '<leader>gi','<cmd>lua require("goto-preview").goto_preview_implementation()<CR>',{noremap=true})
