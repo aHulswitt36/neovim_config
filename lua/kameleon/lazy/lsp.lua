@@ -24,15 +24,20 @@ return
                 cmp_lsp.default_capabilities())
 
             require("fidget").setup({})
-            require("mason").setup({})
+            require("mason").setup({
+                registries = {
+                    'github:mason-org/mason-registry',
+                    'github:crashdummyy/mason-registry',
+                },
+            })
             require("mason-lspconfig").setup({
                 ensure_installed = {
                     -- "lua_ls",
                     "rust_analyzer",
                     "tsserver",
-                    "omnisharp",
+                    -- "omnisharp",
                     "pyright",
-                    "hydra_lsp"
+                    "html"
                 },
                 handlers = {
                     function(server_name)
@@ -40,21 +45,16 @@ return
                             capabilities = capabilities
                         }
                     end,
-                    ["omnisharp"] = function()
-                        require("lspconfig").omnisharp.setup{
-                            capabilities = capabilities,
-                            enable_roslyn_analysers = true,
-                            enable_import_completion = true,
-                            organize_imports_on_format = true,
-                            complete_using_omnisharp_snippets = true,
-                            filetypes = { 'cs', 'vb', 'csproj', 'sln', 'slnx', 'props' },
-                        }
-                    end,
-                    ["hydra_lsp"] = function()
-                        require("lspconfig").hydralsp.setup({
-                           -- on_attach = lsp.on_attach
-                        })
-                    end
+                    -- ["omnisharp"] = function()
+                    --     require("lspconfig").omnisharp.setup{
+                    --         capabilities = capabilities,
+                    --         enable_roslyn_analysers = true,
+                    --         enable_import_completion = true,
+                    --         organize_imports_on_format = true,
+                    --         complete_using_omnisharp_snippets = true,
+                    --         filetypes = { 'cs', 'vb', 'csproj', 'sln', 'slnx', 'props' },
+                    --     }
+                    -- end,
                 }
             })
 
