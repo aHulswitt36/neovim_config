@@ -32,12 +32,14 @@ return
             })
             require("mason-lspconfig").setup({
                 ensure_installed = {
-                    -- "lua_ls",
-                    "rust_analyzer",
+                    "lua_ls",
+                    -- "rust_analyzer",
                     "tsserver",
                     -- "omnisharp",
                     "pyright",
-                    "html"
+                    "html",
+                    "gopls",
+                    "sqls"
                 },
                 handlers = {
                     function(server_name)
@@ -55,6 +57,13 @@ return
                     --         filetypes = { 'cs', 'vb', 'csproj', 'sln', 'slnx', 'props' },
                     --     }
                     -- end,
+                    ["sqls"] = function()
+                        require("lspconfig").sqls.setup{
+                            on_attach = function(client, bufnr)
+                                require('sqls').on_attach(client, bufnr)
+                            end 
+                        }
+                    end
                 }
             })
 
