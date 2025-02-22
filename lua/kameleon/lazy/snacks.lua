@@ -29,6 +29,9 @@ return{
                 zindex = 50,
                 border = "rounded"
             }
+        },
+        lazygit = {
+
         }
     },
     keys = {
