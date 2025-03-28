@@ -11,6 +11,8 @@ return{
         build = "make tiktoken", -- Only on MacOS or Linux
         opts = {
             -- See Configuration section for option
+            model = "o1-preview",
+            agent = "copilot",
             contexts = {
                 file = {
                     input = function(callback)
@@ -31,22 +33,28 @@ return{
                 },
             },
         },
-        -- See Commands section for default commands if you want to lazy load on them
-        -- config = function(_, opts)
-        --     local chat = require("CopilotChat")
-        --     chat.setup(opts)
-        --
-        --     vim.keymap.set({ "v", "n" }, "<leader>cp", chat.toggle())
-        --     vim.keymap.set({ "v", "n" }, "<leader>cP", chat.open({
-        --         window = {
-        --             layout = "float",
-        --             title = "CoPilot"
-        --         }
-        --     }))
-        -- end
-        keys = {  
+        keys = {
             {"<leader>cp", "<cmd>CopilotChatToggle<cr>", desc = "Copilot Chat - Toggle"},
-            {"<leader>cr", "<cmd>CopilotChatReset<cr>", desc = "Copilot Chate - Reset"}
+            {"<leader>cr", "<cmd>CopilotChatReset<cr>", desc = "Copilot Chate - Reset"},
+            -- {
+            --     "<leader>ap",
+            --     function()
+            --         require("CopilotChat").select_prompt({
+            --             context = {
+            --                 "buffers",
+            --             },
+            --         })
+            --     end,
+            --     desc = "CopilotChat - Prompt actions",
+            -- },
+            -- {
+            --     "<leader>ap",
+            --     function()
+            --         require("CopilotChat").select_prompt()
+            --     end,
+            --     mode = "x",
+            --     desc = "CopilotChat - Prompt actions",
+            -- }
         }
     },
 }
