@@ -30,6 +30,7 @@ return {
             }
             require('roslyn').setup {
                 args = {
+                    '--stdio',
                     '--logLevel=Information',
                     '--extensionLogDirectory=' .. vim.fs.dirname(vim.lsp.get_log_path()),
                     '--razorSourceGenerator='
